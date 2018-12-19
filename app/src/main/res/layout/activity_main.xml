@@ -102,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/login_button_dangky"
-                android:id="@+id/login_layout_button_dangky"/>
+                android:id="@+id/login_layout_button_dangky"
+                android:onClick="registerBtnClicked"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
