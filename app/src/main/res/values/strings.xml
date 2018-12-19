@@ -4,4 +4,10 @@
     <string name="login_edit_text_password_hint">Mật khẩu</string>
     <string name="login_button_dangnhap">Đăng Nhập</string>
     <string name="login_button_dangky">Đăng ký</string>
+    <string name="app_name_with_spaces">CVL Delivery Now</string>
+    <string name="str_name">Tên</string>
+    <string name="str_phone_number">Số điện thoại</string>
+    <string name="str_password">Password</string>
+    <string name="str_email">Email</string>
+    <string name="str_signup">ĐĂNG KÝ</string>
 </resources>
