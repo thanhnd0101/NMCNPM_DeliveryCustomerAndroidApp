@@ -96,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/login_button_dangnhap"
-                android:id="@+id/login_layout_button_dangnhap"/>
+                android:id="@+id/login_layout_button_dangnhap"
+                android:onClick="loginBtnClicked"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

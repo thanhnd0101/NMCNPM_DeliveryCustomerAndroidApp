@@ -12,4 +12,5 @@
     <string name="str_signup">ĐĂNG KÝ</string>
     <string name="str_ok">OK</string>
     <string name="str_missing_info">Bạn phải điền đủ thông tin</string>
+    <string name="BASE_URL">https://fast-atoll-52540.herokuapp.com</string>
 </resources>

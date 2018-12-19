@@ -8,6 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.niot.deliveryfood.retrofit.CvlApi;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUpActivity extends AppCompatActivity {
     private String name;
@@ -58,6 +74,48 @@ public class SignUpActivity extends AppCompatActivity {
             });
 
             builder.create().show();
+        }
+        else{
+            Gson gson = new GsonBuilder().create();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(getResources().getString(R.string.BASE_URL))
+                    .addConverterFactory(GsonConverterFactory.create(gson)).build();
+
+            Map<String, String> info = new HashMap<String, String>();
+            info.put("phone", phone);
+            info.put("ten", name);
+            info.put("pass", password);
+            info.put("email", email);
+
+            retrofit.create(CvlApi.class).newUser(info).enqueue(new Callback<List<User>>() {
+                @Override
+                public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                    String msg = "Failed!";
+                    if(response.body() != null){
+                        if(response.body().size() > 0)
+                            msg = "Success! Your id: " + String.valueOf(response.body().get(0).getId());
+                        else
+                            msg = "Failed 1";
+                    }
+                    else
+                        msg = "Failed 2";
+                    Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<List<User>> call, Throwable t) {
+                    Toast.makeText(SignUpActivity.this, "Failed3!", Toast.LENGTH_SHORT).show();
+
+                    if (t instanceof IOException) {
+                        Toast.makeText(SignUpActivity.this, "this is an actual network failure :( inform the user and possibly retry", Toast.LENGTH_SHORT).show();
+                        // logging probably not necessary
+                    }
+                    else {
+                        //Toast.makeText(SignUpActivity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 
