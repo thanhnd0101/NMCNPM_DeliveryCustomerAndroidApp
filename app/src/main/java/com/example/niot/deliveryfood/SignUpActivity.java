@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.retrofit.CvlApi;
+import com.example.niot.deliveryfood.retrofit.RetrofitObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -76,10 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
             builder.create().show();
         }
         else{
-            Gson gson = new GsonBuilder().create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getResources().getString(R.string.BASE_URL))
-                    .addConverterFactory(GsonConverterFactory.create(gson)).build();
+            Retrofit retrofit = RetrofitObject.getInstance();
 
             Map<String, String> info = new HashMap<String, String>();
             info.put("phone", phone);
@@ -90,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
             retrofit.create(CvlApi.class).newUser(info).enqueue(new Callback<List<User>>() {
                 @Override
                 public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                    String msg = "Failed!";
+                    String msg;
                     if(response.body() != null){
                         if(response.body().size() > 0)
                             msg = "Success! Your id: " + String.valueOf(response.body().get(0).getId());
@@ -98,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
                             msg = "Failed 1";
                     }
                     else
-                        msg = "Failed 2";
+                        msg = "";
                     Toast.makeText(SignUpActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
 

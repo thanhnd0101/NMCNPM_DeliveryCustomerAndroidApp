@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.retrofit.CvlApi;
+import com.example.niot.deliveryfood.retrofit.RetrofitObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -36,11 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginBtnClicked(View view) {
-        Gson gson = new GsonBuilder().create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getResources().getString(R.string.BASE_URL))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
+        Retrofit retrofit = RetrofitObject.getInstance();
 
         GetUsernamePassword();
         if(isValidUsernamePassword())
