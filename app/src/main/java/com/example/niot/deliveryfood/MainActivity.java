@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 import com.example.niot.deliveryfood.retrofit.CvlApi;
 import com.example.niot.deliveryfood.retrofit.RetrofitObject;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -19,7 +17,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,8 +48,12 @@ public class MainActivity extends AppCompatActivity {
                 if(response.body() != null){
                     List<User> users = response.body();
 
-                    if(users.size() > 0)
+                    if(users.size() > 0){
                         msg = users.get(0).toString();
+                        Intent i = new Intent(MainActivity.this, RestaurantsViewActivity.class);
+                        startActivity(i);
+                        MainActivity.this.finish();
+                    }
                     else{
                         msg = "Wrong phone number or password!";
                     }

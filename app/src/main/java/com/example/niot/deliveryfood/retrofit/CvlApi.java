@@ -1,5 +1,6 @@
 package com.example.niot.deliveryfood.retrofit;
 
+import com.example.niot.deliveryfood.Restaurant;
 import com.example.niot.deliveryfood.User;
 
 import java.util.List;
@@ -13,9 +14,12 @@ import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface CvlApi {
-    @GET("/login/nd")
-    Call<List<User>> loginUser(@Query("phone") String phone, @Query("pass") String password);
+    @GET("/login/nguoi_dung")
+    Call<List<User>> loginUser(@Query("sdt") String phone, @Query("pass") String password);
 
-    @GET("/signup/nd")
+    @GET("/signup/nguoi_dung")
     Call<List<User>> newUser(@QueryMap Map<String, String> info);
+
+    @GET("/db/quan_an")
+    Call<List<Restaurant>> getRestaurant();
 }
