@@ -23,7 +23,8 @@
         <activity
             android:name=".SignUpActivity"
             android:theme="@style/NoActionBar" />
-        <activity android:name=".RestaurantsViewActivity"></activity>
+        <activity android:name=".RestaurantsViewActivity" />
+        <activity android:name=".RestaurantDetailActivity"></activity>
     </application>
 
 </manifest>

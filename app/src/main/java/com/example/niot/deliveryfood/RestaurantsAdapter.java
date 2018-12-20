@@ -2,6 +2,7 @@ package com.example.niot.deliveryfood;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,21 +32,32 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     public void onBindViewHolder(@NonNull RestaurantsAdapter.RestaurantsHolder restaurantsHolder, int i) {
         restaurantsHolder.res_name.setText(restaurants.get(i).getName());
         restaurantsHolder.res_addr.setText(restaurants.get(i).getAddress());
-        Bitmap bitmap = getBitmapFromUrl(restaurants.get(i).getImage_path());
-        if(bitmap != null)
-            restaurantsHolder.res_img.setImageBitmap(bitmap);
+        new DownloadImageTask(restaurantsHolder.res_img).execute(restaurants.get(i).getImage_path());
     }
 
-    private Bitmap getBitmapFromUrl(String url){
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeStream((InputStream)new URL(url).getContent());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            if(bmImage != null)
+                this.bmImage = bmImage;
         }
-        return bitmap;
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                //Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     @Override
