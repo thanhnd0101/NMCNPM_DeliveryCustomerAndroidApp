@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             tools:ignore="ContentDescription"
-            android:src="@drawable/avatarApp"/>
+            android:src="@drawable/avatarapp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,13 +96,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/login_button_dangnhap"
-                android:id="@+id/login_layout_button_dangnhap"/>
+                android:id="@+id/login_layout_button_dangnhap"
+                android:onClick="loginBtnClicked"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/login_button_dangky"
-                android:id="@+id/login_layout_button_dangky"/>
+                android:id="@+id/login_layout_button_dangky"
+                android:onClick="registerBtnClicked"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
