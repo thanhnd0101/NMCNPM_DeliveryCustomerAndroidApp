@@ -6,21 +6,24 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-    @SerializedName("id_nd")
+    @SerializedName("id")
     @Expose
     private int id;
-    @SerializedName("ten_nd")
+    @SerializedName("ten")
     @Expose
     private String name;
-    @SerializedName("email_nd")
+    @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("sdt_nd")
+    @SerializedName("sdt")
     @Expose
     private String phone;
-    @SerializedName("password_nd")
+    @SerializedName("pass")
     @Expose
     private String password;
+    @SerializedName("is_login")
+    @Expose
+    private boolean isLogin;
 
     public int getId(){
         return id;
@@ -42,10 +45,14 @@ public class Account implements Serializable {
         return password;
     }
 
+    public boolean getIsLogin() {
+        return isLogin;
+    }
+
     @Override
     public String toString() {
         String ans = "ID = " + String.valueOf(id) + "\nName = " + name + "\nEmail = "
-                + email + "\nPhone = " + phone;
+                + email + "\nPhone = " + phone + "\nisLogin: " + isLogin;
         return ans;
     }
 }

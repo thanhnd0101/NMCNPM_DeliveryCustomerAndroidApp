@@ -3,9 +3,7 @@ package com.example.niot.deliveryfood;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class User extends Account implements Serializable {
+public class Restaurant extends Account {
     @SerializedName("dchi")
     @Expose
     private String address;
