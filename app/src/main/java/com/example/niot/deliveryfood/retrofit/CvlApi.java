@@ -1,5 +1,6 @@
 package com.example.niot.deliveryfood.retrofit;
 
+import com.example.niot.deliveryfood.Food;
 import com.example.niot.deliveryfood.Restaurant;
 import com.example.niot.deliveryfood.User;
 
@@ -22,4 +23,7 @@ public interface CvlApi {
 
     @GET("/db/quan_an")
     Call<List<Restaurant>> getRestaurant();
+
+    @GET("/mon_an")
+    Call<List<Food>> getFoodsList(@Query("id_quan_an") int res_id);
 }

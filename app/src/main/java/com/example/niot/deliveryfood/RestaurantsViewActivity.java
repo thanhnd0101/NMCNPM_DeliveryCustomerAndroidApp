@@ -1,5 +1,6 @@
 package com.example.niot.deliveryfood;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RestaurantsViewActivity extends AppCompatActivity {
+public class RestaurantsViewActivity extends AppCompatActivity implements RestaurantsAdapter.RestaurantViewOnClickListener {
     RecyclerView recyclerView;
     List<Restaurant> restaurants;
     RestaurantsAdapter adapter;
@@ -28,9 +29,17 @@ public class RestaurantsViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurants_view);
         recyclerView = findViewById(R.id.recycle_view_list_restaurant);
         restaurants = new ArrayList<>();
-        adapter = new RestaurantsAdapter(restaurants);
+        adapter = new RestaurantsAdapter(restaurants, this);
         recyclerView.setAdapter(adapter);
         getRestaurants();
+    }
+
+    @Override
+    public void onClickRestaurantView(Restaurant r) {
+        // Create intent to call the detail activity
+        Intent i = new Intent(this, RestaurantDetailActivity.class);
+        i.putExtra("res", r);
+        startActivity(i);
     }
 
     private void getRestaurants() {

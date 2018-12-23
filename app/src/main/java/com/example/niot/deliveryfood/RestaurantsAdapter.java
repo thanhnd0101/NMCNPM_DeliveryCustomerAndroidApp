@@ -13,12 +13,14 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.RestaurantsHolder> {
     List<Restaurant> restaurants;
+    RestaurantViewOnClickListener listener;
 
     @NonNull
     @Override
@@ -29,10 +31,18 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RestaurantsAdapter.RestaurantsHolder restaurantsHolder, int i) {
+    public void onBindViewHolder(@NonNull RestaurantsAdapter.RestaurantsHolder restaurantsHolder, final int i) {
         restaurantsHolder.res_name.setText(restaurants.get(i).getName());
         restaurantsHolder.res_addr.setText(restaurants.get(i).getAddress());
         new DownloadImageTask(restaurantsHolder.res_img).execute(restaurants.get(i).getImage_path());
+
+        restaurantsHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null)
+                    listener.onClickRestaurantView(restaurants.get(i));
+            }
+        });
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -65,8 +75,13 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         return restaurants.size();
     }
 
-    public RestaurantsAdapter(List<Restaurant> restaurants){
+    public RestaurantsAdapter(List<Restaurant> restaurants, RestaurantViewOnClickListener listener){
+        this.listener = listener;
         this.restaurants = restaurants;
+    }
+
+    public interface RestaurantViewOnClickListener{
+        void onClickRestaurantView(Restaurant r);
     }
 
     public class RestaurantsHolder extends RecyclerView.ViewHolder {

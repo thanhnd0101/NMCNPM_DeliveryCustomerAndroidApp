@@ -8,11 +8,14 @@
     tools:context=".RestaurantDetailActivity">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="165dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:nestedScrollingEnabled="false"
         android:id="@+id/res_detail_res_info"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         android:id="@+id/res_detail_foods_recycler_view"/>
 </LinearLayout>

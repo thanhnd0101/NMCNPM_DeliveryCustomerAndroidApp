@@ -1,6 +1,7 @@
 package com.example.niot.deliveryfood;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     String phone_number;
     String password;
+    boolean isSendingRequest = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginBtnClicked(View view) {
+        if(isSendingRequest == false)
+            isSendingRequest = true;
+        else
+            Toast.makeText(MainActivity.this, "Sending request, stop spamming!!", Toast.LENGTH_LONG);
+
         Retrofit retrofit = RetrofitObject.getInstance();
 
         GetUsernamePassword();
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 .enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                isSendingRequest = false;
                 String title, msg;
 
                 if(response.body() != null){
@@ -65,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+                isSendingRequest = false;
                 Toast.makeText(MainActivity.this, "Request failed! Check your connection and try again.", Toast.LENGTH_SHORT).show();
             }
         });
