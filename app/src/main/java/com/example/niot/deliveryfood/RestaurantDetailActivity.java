@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.example.niot.deliveryfood.Adapter.FoodDetailsAdapter;
+import com.example.niot.deliveryfood.Adapter.RestaurantsAdapter;
+import com.example.niot.deliveryfood.model.Food;
+import com.example.niot.deliveryfood.model.Restaurant;
 import com.example.niot.deliveryfood.retrofit.CvlApi;
 import com.example.niot.deliveryfood.retrofit.RetrofitObject;
 

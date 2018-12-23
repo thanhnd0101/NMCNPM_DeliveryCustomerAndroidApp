@@ -13,6 +13,7 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/res_view_res_img"/>
             <LinearLayout

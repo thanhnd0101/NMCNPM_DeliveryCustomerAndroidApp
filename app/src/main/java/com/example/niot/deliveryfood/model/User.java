@@ -1,18 +1,20 @@
-package com.example.niot.deliveryfood;
+package com.example.niot.deliveryfood.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Shipper extends Account {
-    @SerializedName("cmnd")
+import java.io.Serializable;
+
+public class User extends Account implements Serializable {
+    @SerializedName("dchi")
     @Expose
-    private String cmnd;
+    private String address;
     @SerializedName("anh")
     @Expose
     private String image_path;
 
     public String getAddress() {
-        return cmnd;
+        return address;
     }
 
     public String getImage_path() {
@@ -21,6 +23,6 @@ public class Shipper extends Account {
 
     @Override
     public String toString() {
-        return super.toString() + "\nCMND: " + cmnd;
+        return super.toString() + "\nAddress: " + address;
     }
 }

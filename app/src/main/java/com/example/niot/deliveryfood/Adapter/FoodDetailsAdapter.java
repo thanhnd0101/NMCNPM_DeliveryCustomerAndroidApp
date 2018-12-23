@@ -1,4 +1,4 @@
-package com.example.niot.deliveryfood;
+package com.example.niot.deliveryfood.Adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.niot.deliveryfood.R;
+import com.example.niot.deliveryfood.model.Food;
 
 import java.io.InputStream;
 import java.net.URL;

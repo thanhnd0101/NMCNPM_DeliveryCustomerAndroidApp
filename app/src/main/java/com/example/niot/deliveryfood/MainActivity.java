@@ -1,98 +1,71 @@
 package com.example.niot.deliveryfood;
 
-import android.content.Intent;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
-import com.example.niot.deliveryfood.retrofit.CvlApi;
-import com.example.niot.deliveryfood.retrofit.RetrofitObject;
+import com.example.niot.deliveryfood.Adapter.BillViewAdapter;
+import com.example.niot.deliveryfood.model.Bill;
+import com.example.niot.deliveryfood.model.User;
 
-import java.util.List;
+public class MainActivity extends AppCompatActivity implements BillsViewFragment.HasUserId {
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+    static private User user = null;
+    private FrameLayout frame;
+    private RestaurantsViewFragment restaurantsViewFragment = new RestaurantsViewFragment();
+    private BillsViewFragment billViewFragment = new BillsViewFragment();
+    // More fragment
 
-public class MainActivity extends AppCompatActivity {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-    String phone_number;
-    String password;
-    boolean isSendingRequest = false;
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    loadFragment(restaurantsViewFragment);
+                    return true;
+                case R.id.navigation_dashboard:
+                    loadFragment(billViewFragment);
+                    return true;
+                case R.id.navigation_notifications:
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(user == null)
+            user = (User) getIntent().getExtras().get("user");
+        frame = findViewById(R.id.fragment_container);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        loadFragment(restaurantsViewFragment);
     }
 
-    public void registerBtnClicked(View view) {
-        Intent intent = new Intent(this, SignUpActivity.class);
-        this.startActivity(intent);
+    private boolean loadFragment(Fragment fragment){
+        if(fragment != null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 
-    public void loginBtnClicked(View view) {
-        if(isSendingRequest == false)
-            isSendingRequest = true;
-        else
-            Toast.makeText(MainActivity.this, "Sending request, stop spamming!!", Toast.LENGTH_LONG);
-
-        Retrofit retrofit = RetrofitObject.getInstance();
-
-        GetUsernamePassword();
-        if(isValidUsernamePassword())
-            retrofit.create(CvlApi.class)
-                .loginUser(phone_number, password)
-                .enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                isSendingRequest = false;
-                String title, msg;
-
-                if(response.body() != null){
-                    List<User> users = response.body();
-
-                    if(users.size() > 0){
-                        msg = users.get(0).toString();
-                        Intent i = new Intent(MainActivity.this, RestaurantsViewActivity.class);
-                        startActivity(i);
-                        MainActivity.this.finish();
-                    }
-                    else{
-                        msg = "Wrong phone number or password!";
-                    }
-                }
-                else
-                    msg = "Something is wrong with our server, please try next time!";
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                isSendingRequest = false;
-                Toast.makeText(MainActivity.this, "Request failed! Check your connection and try again.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Hide the keyboard if user click button
-        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
-
-    private boolean isValidUsernamePassword() {
-        return phone_number.length() > 0 && password.length() > 0;
-    }
-
-    private void GetUsernamePassword() {
-        EditText phoneET = findViewById(R.id.login_layout_edit_text_sdt);
-        EditText passET = findViewById(R.id.login_layout_edit_text_password);
-
-        phone_number = phoneET.getText().toString();
-        password = passET.getText().toString();
+    @Override
+    public int getUserId() {
+        return user.getId();
     }
 }

@@ -1,16 +1,15 @@
 package com.example.niot.deliveryfood.retrofit;
 
-import com.example.niot.deliveryfood.Food;
-import com.example.niot.deliveryfood.Restaurant;
-import com.example.niot.deliveryfood.User;
+import com.example.niot.deliveryfood.model.Bill;
+import com.example.niot.deliveryfood.model.Food;
+import com.example.niot.deliveryfood.model.Restaurant;
+import com.example.niot.deliveryfood.model.User;
 
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -26,4 +25,7 @@ public interface CvlApi {
 
     @GET("/mon_an")
     Call<List<Food>> getFoodsList(@Query("id_quan_an") int res_id);
+
+    @GET("/hoa_don")
+    Call<List<Bill>> getBillsList(@Query("id_nguoi_dung") int user_id);
 }
