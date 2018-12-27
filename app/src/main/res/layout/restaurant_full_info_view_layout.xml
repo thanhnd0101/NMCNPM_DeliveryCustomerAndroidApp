@@ -42,9 +42,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-                    <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/baseline_favorite_border_black_36dp"
+                        android:scaleType="fitXY"
+                        android:tint="@color/colorPrimary"
                         android:id="@+id/res_view_fav_btn"/>
                     <TextView
                         android:layout_width="wrap_content"

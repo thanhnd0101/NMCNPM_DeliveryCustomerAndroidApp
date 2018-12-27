@@ -24,4 +24,6 @@
     <string name="total_price">Tổng tiền:</string>
     <string name="bill">#Hoá đơn</string>
     <string name="bill_address">Địa chỉ</string>
+    <string name="zero">0</string>
+    <string name="confirm">Xác nhận</string>
 </resources>

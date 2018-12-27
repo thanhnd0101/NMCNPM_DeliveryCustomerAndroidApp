@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.niot.deliveryfood.Adapter.RestaurantsAdapter;
 import com.example.niot.deliveryfood.model.Restaurant;
+import com.example.niot.deliveryfood.model.User;
 import com.example.niot.deliveryfood.retrofit.CvlApi;
 import com.example.niot.deliveryfood.retrofit.RetrofitObject;
 
@@ -44,9 +45,22 @@ public class RestaurantsViewFragment extends Fragment implements RestaurantsAdap
 
     @Override
     public void onClickRestaurantView(Restaurant r) {
+        User u;
+        // Get the user from MainActivity (this should work because MainActivity is the parent of this fragment)
+        if(this.getActivity() instanceof MainActivity){
+            u = MainActivity.getUser();
+        }
+        else
+        {
+            Toast.makeText(getContext(),"Some thing screw up! Sorry please feedback", Toast.LENGTH_LONG);
+            return;
+        }
+
         // Create intent to call the detail activity
         Intent i = new Intent(this.getActivity(), RestaurantDetailActivity.class);
+
         i.putExtra("res", r);
+        i.putExtra("user", u);
         startActivity(i);
     }
 
@@ -56,6 +70,10 @@ public class RestaurantsViewFragment extends Fragment implements RestaurantsAdap
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
                 List<Restaurant> restaurants = response.body();
+                if(restaurants == null){
+                    Toast.makeText(RestaurantsViewFragment.this.getActivity(), "Failed1, Refresh please", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(restaurants.size() > 0){
                     RestaurantsViewFragment.this.restaurants.clear();
                     RestaurantsViewFragment.this.restaurants.addAll(restaurants);
@@ -74,7 +92,7 @@ public class RestaurantsViewFragment extends Fragment implements RestaurantsAdap
                     // logging probably not necessary
                 }
                 else {
-                    //Toast.makeText(SignUpActivity.this, "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestaurantsViewFragment.this.getActivity(), "conversion issue! big problems :(", Toast.LENGTH_SHORT).show();
                     Toast.makeText(RestaurantsViewFragment.this.getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }

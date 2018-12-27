@@ -30,7 +30,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RestaurantsAdapter.RestaurantsHolder restaurantsHolder, final int i) {
+    public void onBindViewHolder(@NonNull final RestaurantsAdapter.RestaurantsHolder restaurantsHolder, final int i) {
         restaurantsHolder.res_name.setText(restaurants.get(i).getName());
         restaurantsHolder.res_addr.setText(restaurants.get(i).getAddress());
         new DownloadImageTask(restaurantsHolder.res_img).execute(restaurants.get(i).getImage_path());
@@ -40,6 +40,17 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             public void onClick(View v) {
                 if(listener != null)
                     listener.onClickRestaurantView(restaurants.get(i));
+            }
+        });
+
+        restaurantsHolder.res_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restaurantsHolder.fav = !restaurantsHolder.fav;
+                if(restaurantsHolder.fav)
+                    restaurantsHolder.res_fav.setImageResource(R.drawable.baseline_favorite_black_36dp);
+                else
+                    restaurantsHolder.res_fav.setImageResource(R.drawable.baseline_favorite_border_black_36dp);
             }
         });
     }
@@ -87,12 +98,15 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         TextView res_name;
         TextView res_addr;
         ImageView res_img;
+        ImageView res_fav;
+        boolean fav = false;
 
         public RestaurantsHolder(@NonNull View itemView) {
             super(itemView);
             res_name = itemView.findViewById(R.id.res_view_res_name);
             res_addr = itemView.findViewById(R.id.res_view_res_description);
             res_img = itemView.findViewById(R.id.res_view_res_img);
+            res_fav = itemView.findViewById(R.id.res_view_fav_btn);
         }
     }
 }

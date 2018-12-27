@@ -57,13 +57,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/login_layout_edit_text_sdt"
+                    android:singleLine="true"
                     android:hint="@string/login_edit_text_sdt_hint"
+                    android:nextFocusDown="@id/login_layout_edit_text_password"
                     tools:ignore="Autofill,TextFields" />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/login_layout_edit_text_password"
+                    android:singleLine="true"
+                    android:nextFocusDown="@id/login_layout_button_dangnhap"
                     android:hint="@string/login_edit_text_password_hint"
                     tools:ignore="Autofill,TextFields" />
             </LinearLayout>

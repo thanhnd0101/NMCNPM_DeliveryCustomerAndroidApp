@@ -51,11 +51,15 @@ public class BillsViewFragment extends Fragment implements BillViewAdapter.BillV
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 List<Bill> billsList = response.body();
-                if(billsList.size() > 0){
-                    bills.clear();
-                    bills.addAll(billsList);
-                    adapter.notifyDataSetChanged();
+                if(billsList != null) {
+                    if (billsList.size() > 0) {
+                        bills.clear();
+                        bills.addAll(billsList);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
+                else
+                    Toast.makeText(BillsViewFragment.this.getActivity(), "Failed1, Refresh please", Toast.LENGTH_LONG).show();
             }
 
             @Override

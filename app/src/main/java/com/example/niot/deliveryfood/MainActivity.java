@@ -14,7 +14,6 @@ import com.example.niot.deliveryfood.model.Bill;
 import com.example.niot.deliveryfood.model.User;
 
 public class MainActivity extends AppCompatActivity implements BillsViewFragment.HasUserId {
-
     static private User user = null;
     private FrameLayout frame;
     private RestaurantsViewFragment restaurantsViewFragment = new RestaurantsViewFragment();
@@ -67,5 +66,9 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
     @Override
     public int getUserId() {
         return user.getId();
+    }
+
+    public static User getUser() {
+        return user;
     }
 }
