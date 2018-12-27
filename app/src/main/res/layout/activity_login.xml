@@ -7,11 +7,12 @@
     tools:context=".LoginActivity"
     android:orientation="vertical"
     android:background="@drawable/background"
-    android:weightSum="7">
+    android:weightSum="4.5">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="2.5"
         tools:ignore="InefficientWeight"
         android:orientation="horizontal"
         android:weightSum="4">
@@ -34,7 +35,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
         android:orientation="vertical">
         <LinearLayout
             android:layout_weight="1"
@@ -80,7 +82,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_marginVertical="20dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="7">
         <TextView
@@ -93,12 +96,12 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             tools:ignore="UselessLeaf"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:orientation="vertical">
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginVertical="8dp"
                 android:text="@string/login_button_dangnhap"
                 android:id="@+id/login_layout_button_dangnhap"
                 android:onClick="loginBtnClicked"/>
@@ -106,14 +109,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginVertical="8dp"
                 android:text="@string/login_button_dangky"
                 android:id="@+id/login_layout_button_dangky"
                 android:onClick="registerBtnClicked"/>
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
     </LinearLayout>
 </LinearLayout>
