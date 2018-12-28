@@ -41,7 +41,7 @@ public class BillResponse implements Serializable {
     public String toString() {
         String ans = "Bill: ";
         ans += "Bill id : " + String.valueOf(hoadon.getIdHoaDon()) + "\n";
-        ans += "Bill addr : " + hoadon.getDiaChiaGiao() + "\n";
+        ans += "Bill addr : " + hoadon.getDiaChiGiao() + "\n";
         for(BillDetail d : chi_tiet){
             ans += "id mon : " + String.valueOf(d.getId_mon_an()) + "\n";
         }

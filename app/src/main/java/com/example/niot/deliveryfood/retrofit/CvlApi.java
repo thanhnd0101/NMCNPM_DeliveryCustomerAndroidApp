@@ -1,6 +1,7 @@
 package com.example.niot.deliveryfood.retrofit;
 
 import com.example.niot.deliveryfood.model.Bill;
+import com.example.niot.deliveryfood.model.BillDetail;
 import com.example.niot.deliveryfood.model.BillResponse;
 import com.example.niot.deliveryfood.model.Cart;
 import com.example.niot.deliveryfood.model.Food;
@@ -38,11 +39,21 @@ public interface CvlApi {
     @GET("/hoa_don")
     Call<List<Bill>> getBillsList(@Query("id_nguoi_dung") int user_id);
 
+    @GET("/hoa_don")
+    Call<Bill> getBillById(@Query("id_hoa_don") int bill_id);
+
+    @GET("/hoa_don_chua_xong")
+    Call<List<Bill>> getCurrentBillsList(@Query("id_nguoi_dung") int user_id);
+
     @POST("/dat_mon")
     Call<BillResponse> postCart(@Body Cart cart);
 
-    @FormUrlEncoded
-    @POST("/test_json")
-    Call<ResponseBody> test(@Field("test1") String test1, @Field("test2") int test2);
+    @GET("/chi_tiet_hoa_don")
+    Call<List<BillDetail>> getBillDetailByBill(@Query("id_hoa_don") int id);
 
+    @GET("/yeu_thich/check")
+    Call<PostResponse> checkFav(@Query("id_nguoi_dung") int userId, @Query("id_quan_an") int resId);
+
+    @GET("/yeu_thich/change")
+    Call<PostResponse> changeFav(@Query("id_nguoi_dung") int userId, @Query("id_quan_an") int resId);
 }

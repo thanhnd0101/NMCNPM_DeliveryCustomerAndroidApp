@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
     private FrameLayout frame;
     private RestaurantsViewFragment restaurantsViewFragment = new RestaurantsViewFragment();
     private BillsViewFragment billViewFragment = new BillsViewFragment();
+    private CurrentBillsViewFragment currentBillsViewFragment = new CurrentBillsViewFragment();
     // More fragment
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
                     loadFragment(billViewFragment);
                     return true;
                 case R.id.navigation_notifications:
+                    loadFragment(currentBillsViewFragment);
                     return true;
             }
             return false;

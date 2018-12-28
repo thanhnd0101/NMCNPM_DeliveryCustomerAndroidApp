@@ -1,6 +1,7 @@
 package com.example.niot.deliveryfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class BillsViewFragment extends Fragment implements BillViewAdapter.BillV
         return view;
     }
 
-    private void getBills() {
+    protected void getBills() {
         Retrofit retrofit = RetrofitObject.getInstance();
         retrofit.create(CvlApi.class).getBillsList(userId).enqueue(new Callback<List<Bill>>() {
             @Override
@@ -97,14 +98,15 @@ public class BillsViewFragment extends Fragment implements BillViewAdapter.BillV
     }
 
     @Override
-    public void onClickBillView(Bill r) {
-        // Call the bill detail
-        //Intent i = new Intent();
-        //getActivity().startActivity(i);
+    public void onClickBillView(Bill b) {
+        //Call the bill detail
+        Intent i = new Intent(this.getActivity(), BillDetailActivity.class);
+        i.putExtra("bill", b);
+        if(getActivity() != null)
+            getActivity().startActivity(i);
     }
 
     public interface HasUserId {
-        // TODO: Update argument type and name
         int getUserId();
     }
 }

@@ -3,6 +3,9 @@ package com.example.niot.deliveryfood;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +15,9 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.Adapter.FoodDetailsAdapter;
@@ -19,6 +25,7 @@ import com.example.niot.deliveryfood.Adapter.RestaurantsAdapter;
 import com.example.niot.deliveryfood.model.BillResponse;
 import com.example.niot.deliveryfood.model.Cart;
 import com.example.niot.deliveryfood.model.Food;
+import com.example.niot.deliveryfood.model.PostResponse;
 import com.example.niot.deliveryfood.model.Restaurant;
 import com.example.niot.deliveryfood.model.User;
 import com.example.niot.deliveryfood.retrofit.CvlApi;
@@ -26,6 +33,7 @@ import com.example.niot.deliveryfood.retrofit.RetrofitObject;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +47,13 @@ import retrofit2.Retrofit;
 public class RestaurantDetailActivity extends AppCompatActivity implements FoodDetailsAdapter.FoodChangeQuantityOnClickListener {
 
     RecyclerView foodRecyclerView;
-    RecyclerView resRecyclerView;
     List<Food> foods;
     ArrayList<Food> selectedFoods;
     FoodDetailsAdapter adapter;
+    Restaurant restaurant;
     Cart cart;
+    User user;
+    boolean fav_status;
     int res_id;
 
     @Override
@@ -51,8 +61,8 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_detail);
         Intent intent = getIntent();
-        Restaurant restaurant = (Restaurant)intent.getExtras().get("res");
-        User user = (User)intent.getExtras().get("user");
+        restaurant = (Restaurant)intent.getExtras().get("res");
+        user = (User)intent.getExtras().get("user");
 
         // Create a temporary cart
         res_id = restaurant.getId();
@@ -61,19 +71,110 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
 
         // Get the ViewGroups
         foodRecyclerView = findViewById(R.id.res_detail_foods_recycler_view);
-        resRecyclerView = findViewById(R.id.res_detail_res_info);
 
         // Put restaurant data to the view
-        ArrayList<Restaurant> temp = new ArrayList<>();
-        temp.add(restaurant);
-        RestaurantsAdapter resAdapter = new RestaurantsAdapter(temp, null);
+        setUpRestaurantInfo();
 
         // Adapter and recycler view
-        resRecyclerView.setAdapter(resAdapter);
         foods = new ArrayList<>();
         adapter = new FoodDetailsAdapter(foods, this);
         foodRecyclerView.setAdapter(adapter);
         getFoods();
+    }
+
+    private void setUpRestaurantInfo() {
+        ImageView img = findViewById(R.id.res_detail_res_img);
+        TextView desc = findViewById(R.id.res_detail_res_description);
+        TextView name = findViewById(R.id.res_detail_res_name);
+        final ImageView fav = findViewById(R.id.res_detail_fav_btn);
+
+        new DownloadImageTask(img).execute(restaurant.getImage_path());
+        name.setText(restaurant.getName());
+
+        // Get the favorite status of this restaurant
+        getFavStatus();
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFavStatus();
+                fav_status = !fav_status;
+                if(fav_status)
+                    fav.setImageResource(R.drawable.baseline_favorite_black_36dp);
+                else
+                    fav.setImageResource(R.drawable.baseline_favorite_border_black_36dp);
+            }
+        });
+    }
+
+    private void getFavStatus() {
+        Retrofit retrofit = RetrofitObject.getInstance();
+        retrofit.create(CvlApi.class).checkFav(user.getId(), restaurant.getId()).enqueue(new Callback<PostResponse>() {
+            @Override
+            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                if(response.body() != null){
+                    // Status = 0 nghĩa là có thích
+                    int status = 1 - response.body().getStatus();
+                    RestaurantDetailActivity.this.updateFavIcon(status);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostResponse> call, Throwable t) {
+                Toast.makeText(RestaurantDetailActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void changeFavStatus() {
+        Retrofit retrofit = RetrofitObject.getInstance();
+        retrofit.create(CvlApi.class).changeFav(user.getId(), restaurant.getId()).enqueue(new Callback<PostResponse>() {
+            @Override
+            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+                Log.e("FAV:","Changed!");
+            }
+
+            @Override
+            public void onFailure(Call<PostResponse> call, Throwable t) {
+                Toast.makeText(RestaurantDetailActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateFavIcon(int status) {
+        ImageView fav = findViewById(R.id.res_detail_fav_btn);
+        if(status == 1){
+            fav.setImageResource(R.drawable.baseline_favorite_black_36dp);
+            fav_status = true;
+        }
+        else{
+            fav.setImageResource(R.drawable.baseline_favorite_border_black_36dp);
+            fav_status = false;
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            if(bmImage != null)
+                this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                //Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     private void getFoods() {

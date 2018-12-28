@@ -10,7 +10,9 @@ public class Bill implements Serializable {
     @SerializedName("gia")
     private int giaHoaDon;
     @SerializedName("dchi_giao")
-    private String DiaChiaGiao;
+    private String DiaChiGiao;
+    @SerializedName("dchi_quan")
+    private String DiaChiQuan;
     @SerializedName("tg_nd_dat")
     private String TGKhachHangDat;
     @SerializedName("tg_qa_xac_nhan")
@@ -34,8 +36,12 @@ public class Bill implements Serializable {
         return giaHoaDon;
     }
 
-    public String getDiaChiaGiao() {
-        return DiaChiaGiao;
+    public String getDiaChiGiao() {
+        return DiaChiGiao;
+    }
+
+    public String getDiaChiQuan(){
+        return DiaChiQuan;
     }
 
     public String getTGKhachHangDat() {

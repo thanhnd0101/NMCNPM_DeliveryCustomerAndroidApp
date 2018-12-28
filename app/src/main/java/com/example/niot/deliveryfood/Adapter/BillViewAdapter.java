@@ -1,5 +1,6 @@
 package com.example.niot.deliveryfood.Adapter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,16 +27,44 @@ public class BillViewAdapter extends RecyclerView.Adapter<BillViewAdapter.BillHo
 
     @Override
     public void onBindViewHolder(@NonNull BillHolder billHolder, final int i) {
+        final Bill bill = bills.get(i);
+
         // ID hoá đơn
-        String idHoaDon = "Đơn #" + String.valueOf(bills.get(i).getIdHoaDon());
+        String idHoaDon = "Đơn #" + String.valueOf(bill.getIdHoaDon());
         billHolder.bill_id.setText(idHoaDon);
 
         // Địa chỉ của hoá đơn
-        billHolder.bill_addr.setText(bills.get(i).getDiaChiaGiao());
+        billHolder.bill_addr.setText(bill.getDiaChiGiao());
 
         // Giá tiền hoá đơn
-        String gia = "Tổng tiền: " + String.valueOf(bills.get(i).getGiaHoaDon() + bills.get(i).getGiaVanCHuyen());
+        String gia = "Tổng tiền: " + String.valueOf(bill.getGiaHoaDon() + bill.getGiaVanCHuyen());
         billHolder.bill_price.setText(gia);
+
+        // Trạng thái hoá đơn
+        final TextView status = billHolder.bill_status;
+        String str;
+        switch (bill.getTrangThai()){
+            case 0: str = "Chờ quán xác nhận."; break;
+            case 1: str = "Quán đã xác nhận"; break;
+            case 2: str = "Shipper đã xác nhận"; break;
+            case 3: str = "Đang giao"; break;
+            case 4: str = "Giao thành công"; break;
+            default: str = "Đã huỷ"; break;
+        }
+
+        final String str1 = str;
+        status.post(new Runnable() {
+            @Override
+            public void run() {
+                status.setText(str1);
+                if(bill.getTrangThai() == -1)
+                    status.setTextColor(Color.RED);
+                else if(bill.getTrangThai() < 4)
+                    status.setTextColor(Color.BLUE);
+                else
+                    status.setTextColor(0xFF005500);
+            }
+        });
 
         // Bấm vào để hiện chi tiết -> mở intent activity khác, gọi về fragment để fragment xử lý
         billHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +95,14 @@ public class BillViewAdapter extends RecyclerView.Adapter<BillViewAdapter.BillHo
         TextView bill_id;
         TextView bill_addr;
         TextView bill_price;
+        TextView bill_status;
 
         public BillHolder(@NonNull View itemView) {
             super(itemView);
             bill_id = itemView.findViewById(R.id.bill_id_text_view);
             bill_addr = itemView.findViewById(R.id.bill_address_text_view);
             bill_price = itemView.findViewById(R.id.bill_price_text_view);
+            bill_status = itemView.findViewById(R.id.bill_info_status);
         }
     }
 }

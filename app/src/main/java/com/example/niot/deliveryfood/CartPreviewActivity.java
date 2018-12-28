@@ -29,8 +29,6 @@ public class CartPreviewActivity extends AppCompatActivity{
 
     FoodSimpleViewAdapter adapter;
     Cart cart;
-    List<Food> foods;
-    int[] quantity;
     RecyclerView recyclerView;
 
     @Override
@@ -39,19 +37,10 @@ public class CartPreviewActivity extends AppCompatActivity{
         setContentView(R.layout.activity_cart_preview);
         String json = getIntent().getStringExtra("cartJson");
         cart = new Gson().fromJson(json, Cart.class);
-        setUpQuantity();
 
         recyclerView = findViewById(R.id.cart_preview_recycler_view);
         adapter = new FoodSimpleViewAdapter(cart);
         recyclerView.setAdapter(adapter);
-    }
-
-    private void setUpQuantity() {
-        quantity = new int[cart.getDetail().size()];
-        for(int i=0;i<cart.getDetail().size();i++){
-            // Get quantity of the refered food
-            quantity[i] = cart.getDetail().get(i).getQuantity();
-        }
     }
 
 

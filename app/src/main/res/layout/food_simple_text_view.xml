@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="10"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Món"
+        android:id="@+id/food_simple_name"
+        android:gravity="left"
+        android:layout_gravity="center_vertical"
+        android:textStyle="bold"
+        android:layout_weight="5"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="center_vertical"
+        android:gravity="left"
+        android:text="SL: "
+        android:id="@+id/food_simple_count"
+        android:textSize="20sp"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_gravity="center_vertical"
+        android:gravity="end"
+        android:id="@+id/food_simple_price"
+        android:text="100d"
+        android:textSize="20sp"/>
+</LinearLayout>

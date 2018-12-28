@@ -26,4 +26,8 @@
     <string name="bill_address">Địa chỉ</string>
     <string name="zero">0</string>
     <string name="confirm">Xác nhận</string>
+    <string name="customer_addr">Địa chỉ khách:</string>
+    <string name="restaurant_addr">Địa chỉ quán:</string>
+    <string name="total">Tổng tiền:</string>
+    <string name="detail">Chi tiết:</string>
 </resources>

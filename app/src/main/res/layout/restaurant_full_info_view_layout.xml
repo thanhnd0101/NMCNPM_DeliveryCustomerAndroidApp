@@ -6,6 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
         android:orientation="vertical">
         <LinearLayout
             android:orientation="horizontal" android:layout_width="match_parent"
@@ -19,6 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
@@ -29,6 +31,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
                     android:textSize="20dp"
                     android:id="@+id/res_view_res_description"/>
                 <RatingBar
@@ -38,24 +42,7 @@
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_margin="5dp"
                     android:id="@+id/res_view_rating"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/baseline_favorite_border_black_36dp"
-                        android:scaleType="fitXY"
-                        android:tint="@color/colorPrimary"
-                        android:id="@+id/res_view_fav_btn"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/favorite"
-                        android:textSize="20sp"
-                        android:layout_gravity="center_vertical"/>
-                </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>

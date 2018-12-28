@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class BillDetail implements Serializable {
-    @SerializedName("id_chi_tiet")
+    @SerializedName("id")
     private int id_chi_tiet;
     @SerializedName("id_mon_an")
     private int id_mon_an;
@@ -13,6 +13,8 @@ public class BillDetail implements Serializable {
     private int soluong;
     @SerializedName("gia")
     private int gia;
+    @SerializedName("ten")
+    private String food_name;
 
     public BillDetail(int id_chi_tiet, int id_mon_an, int soluong, int gia) {
         this.id_chi_tiet = id_chi_tiet;
@@ -35,5 +37,9 @@ public class BillDetail implements Serializable {
 
     public int getGia() {
         return gia;
+    }
+
+    public String getFood_name() {
+        return food_name;
     }
 }

@@ -69,8 +69,9 @@
                     android:layout_weight="1"
                     android:id="@+id/login_layout_edit_text_password"
                     android:singleLine="true"
-                    android:nextFocusDown="@id/login_layout_button_dangnhap"
                     android:hint="@string/login_edit_text_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
                     tools:ignore="Autofill,TextFields" />
             </LinearLayout>
             <TextView

@@ -3,9 +3,12 @@ package com.example.niot.deliveryfood;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.model.User;
@@ -92,6 +95,19 @@ public class LoginActivity extends AppCompatActivity {
     private void GetUsernamePassword() {
         EditText phoneET = findViewById(R.id.login_layout_edit_text_sdt);
         EditText passET = findViewById(R.id.login_layout_edit_text_password);
+
+        passET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if(actionId == EditorInfo.IME_ACTION_DONE)
+                {
+                    loginBtnClicked(v);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
 
         phone_number = phoneET.getText().toString();
         password = passET.getText().toString();
