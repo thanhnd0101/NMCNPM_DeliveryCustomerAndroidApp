@@ -24,13 +24,13 @@
         <activity
             android:name=".SignUpActivity"
             android:theme="@style/NoActionBar" />
-        <activity android:name=".RestaurantsViewFragment" />
-        <activity android:name=".RestaurantDetailActivity" />
+        <activity android:name=".RestaurantDetailActivity" android:theme="@style/NoActionBar"/>
         <activity
             android:name=".MainActivity"
+            android:theme="@style/NoActionBar"
             android:label="@string/title_activity_main" />
-        <activity android:name=".CartPreviewActivity" />
-        <activity android:name=".BillDetailActivity"></activity>
+        <activity android:name=".CartPreviewActivity" android:theme="@style/NoActionBar"/>
+        <activity android:name=".BillDetailActivity" android:theme="@style/NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -59,12 +59,18 @@ public class BillsViewFragment extends Fragment implements BillViewAdapter.BillV
                         adapter.notifyDataSetChanged();
                     }
                 }
-                else
+                else{
+                    if(BillsViewFragment.this.getActivity() == null)
+                        return;
                     Toast.makeText(BillsViewFragment.this.getActivity(), "Failed1, Refresh please", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Bill>> call, Throwable t) {
+                // In case swap fragment while get response
+                if(BillsViewFragment.this.getActivity() == null)
+                    return;
                 Toast.makeText(BillsViewFragment.this.getActivity(), "Failed3!", Toast.LENGTH_SHORT).show();
 
                 if (t instanceof IOException) {

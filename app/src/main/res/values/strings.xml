@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">DeliveryFood</string>
-    <string name="login_edit_text_sdt_hint">Email hoặc số điện thoại</string>
+    <string name="login_edit_text_sdt_hint">Số điện thoại</string>
     <string name="login_edit_text_password_hint">Mật khẩu</string>
     <string name="login_button_dangnhap">Đăng Nhập</string>
     <string name="login_button_dangky">Đăng ký</string>
@@ -15,9 +15,9 @@
     <string name="BASE_URL">https://fast-atoll-52540.herokuapp.com</string>
     <string name="favorite">Yêu thích</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Quán</string>
+    <string name="title_bill">Tất cả đơn</string>
+    <string name="title_current_bill">Đang xử lý</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -28,6 +28,9 @@
     <string name="confirm">Xác nhận</string>
     <string name="customer_addr">Địa chỉ khách:</string>
     <string name="restaurant_addr">Địa chỉ quán:</string>
-    <string name="total">Tổng tiền:</string>
+    <string name="total">Cộng:</string>
+    <string name="total_total">Tổng tiền:</string>
+    <string name="ship">Phí ship:</string>
     <string name="detail">Chi tiết:</string>
+    <string name="address">Địa chỉ:</string>
 </resources>

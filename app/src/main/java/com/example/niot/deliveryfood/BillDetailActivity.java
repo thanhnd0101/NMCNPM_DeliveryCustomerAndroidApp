@@ -60,6 +60,12 @@ public class BillDetailActivity extends AppCompatActivity {
         TextView total = findViewById(R.id.bill_detail_total);
         total.setText(String.valueOf(bill.getGiaHoaDon()));
 
+        TextView ship = findViewById(R.id.bill_detail_ship);
+        ship.setText(String.valueOf(bill.getGiaVanCHuyen()));
+
+        TextView totalTotal = findViewById(R.id.bill_detail_total_total);
+        totalTotal.setText(String.valueOf(bill.getGiaHoaDon() + bill.getGiaVanCHuyen()));
+
         updateBillStatus();
     }
 
@@ -103,9 +109,9 @@ public class BillDetailActivity extends AppCompatActivity {
             public void run() {
                 while(true){
                     try{
-                        recyclerView.postDelayed(loadData, 5000);
+                        recyclerView.postDelayed(loadData, 2000);
                         try{
-                            Thread.sleep(5000);
+                            Thread.sleep(2000);
                         } catch (Exception e){
                             e.printStackTrace();
                         }
@@ -185,5 +191,11 @@ public class BillDetailActivity extends AppCompatActivity {
         adapter = new FoodOnlyTextAdapter(details);
         recyclerView = findViewById(R.id.bill_detail_recycler_view);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        setResult(0);
+        super.onDestroy();
     }
 }

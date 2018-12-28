@@ -61,6 +61,7 @@
                     android:id="@+id/login_layout_edit_text_sdt"
                     android:singleLine="true"
                     android:hint="@string/login_edit_text_sdt_hint"
+                    android:inputType="phone"
                     android:nextFocusDown="@id/login_layout_edit_text_password"
                     tools:ignore="Autofill,TextFields" />
                 <EditText

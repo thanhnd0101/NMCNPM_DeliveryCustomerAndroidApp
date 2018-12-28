@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(user == null)
-            user = (User) getIntent().getExtras().get("user");
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
+            if(bundle.get("user") != null)
+                user = (User) bundle.get("user");
         frame = findViewById(R.id.fragment_container);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

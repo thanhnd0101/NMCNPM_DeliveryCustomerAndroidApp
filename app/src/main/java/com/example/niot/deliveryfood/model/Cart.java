@@ -70,6 +70,10 @@ public class Cart implements Serializable {
         detail.add(d);
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public int getQuantity(Food food){
         for(Detail d : detail){
             if(d.food_id == food.getId())

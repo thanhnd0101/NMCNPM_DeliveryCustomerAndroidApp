@@ -36,9 +36,9 @@ public class CurrentBillsViewFragment extends BillsViewFragment {
                             recyclerView.post(getData);
                             firstRun = false;
                         }
-                        recyclerView.postDelayed(getData, 5000);
+                        recyclerView.postDelayed(getData, 2000);
                         try{
-                            Thread.sleep(5000);
+                            Thread.sleep(2000);
                         } catch (Exception e){
                             e.printStackTrace();
                         }
@@ -59,18 +59,21 @@ public class CurrentBillsViewFragment extends BillsViewFragment {
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
                 List<Bill> billsList = response.body();
                 if(billsList != null) {
-                    if (billsList.size() > 0) {
-                        CurrentBillsViewFragment.this.bills.clear();
-                        CurrentBillsViewFragment.this.bills.addAll(billsList);
-                        CurrentBillsViewFragment.this.adapter.notifyDataSetChanged();
-                    }
+                    CurrentBillsViewFragment.this.bills.clear();
+                    CurrentBillsViewFragment.this.bills.addAll(billsList);
+                    CurrentBillsViewFragment.this.adapter.notifyDataSetChanged();
                 }
-                else
+                else{
+                    if(CurrentBillsViewFragment.this.getActivity() == null)
+                        return;
                     Toast.makeText(CurrentBillsViewFragment.this.getActivity(), "Failed1, Refresh please", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<Bill>> call, Throwable t) {
+                if(CurrentBillsViewFragment.this.getActivity() == null)
+                    return;
                 Toast.makeText(CurrentBillsViewFragment.this.getActivity(), "Failed3!", Toast.LENGTH_SHORT).show();
 
                 if (t instanceof IOException) {

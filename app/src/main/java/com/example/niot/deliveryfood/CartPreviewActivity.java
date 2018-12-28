@@ -2,11 +2,13 @@ package com.example.niot.deliveryfood;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.Adapter.FoodSimpleViewAdapter;
@@ -41,16 +43,21 @@ public class CartPreviewActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.cart_preview_recycler_view);
         adapter = new FoodSimpleViewAdapter(cart);
         recyclerView.setAdapter(adapter);
+        EditText addr = findViewById(R.id.cart_preview_user_address);
+        addr.setText(cart.getAddress());
     }
 
-
     public void confirmCart(View view) {
+        getUserAddress();
         Retrofit retrofit = RetrofitObject.getInstance();
         retrofit.create(CvlApi.class).postCart(cart).enqueue(new Callback<BillResponse>() {
             @Override
             public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
                 if(response.body() != null){
                     BillResponse billResponse = response.body();
+                    Intent i = new Intent(CartPreviewActivity.this, BillDetailActivity.class);
+                    i.putExtra("bill", billResponse.getHoadon());
+                    CartPreviewActivity.this.startActivityForResult(i, 2018);
                     Log.e("LOG BILL:", billResponse.toString());
                 }
             }
@@ -69,8 +76,17 @@ public class CartPreviewActivity extends AppCompatActivity{
                 }
             }
         });
+    }
 
-        setResult(Activity.RESULT_OK);
-        finish();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == 2812){
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
+    }
+
+    private void getUserAddress() {
+        cart.setAddress(((EditText)findViewById(R.id.cart_preview_user_address)).getText().toString());
     }
 }
