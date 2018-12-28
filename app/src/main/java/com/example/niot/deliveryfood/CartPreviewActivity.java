@@ -57,7 +57,7 @@ public class CartPreviewActivity extends AppCompatActivity{
                     BillResponse billResponse = response.body();
                     Intent i = new Intent(CartPreviewActivity.this, BillDetailActivity.class);
                     i.putExtra("bill", billResponse.getHoadon());
-                    CartPreviewActivity.this.startActivityForResult(i, 2018);
+                    CartPreviewActivity.this.startActivityForResult(i, 2812);
                     Log.e("LOG BILL:", billResponse.toString());
                 }
             }

@@ -9,6 +9,11 @@ import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.Adapter.FoodDetailsAdapter;
+import com.example.niot.deliveryfood.Adapter.RestaurantDetailTabAdapter;
 import com.example.niot.deliveryfood.Adapter.RestaurantsAdapter;
 import com.example.niot.deliveryfood.model.BillResponse;
 import com.example.niot.deliveryfood.model.Cart;
@@ -44,13 +50,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class RestaurantDetailActivity extends AppCompatActivity implements FoodDetailsAdapter.FoodChangeQuantityOnClickListener {
+public class RestaurantDetailActivity extends AppCompatActivity implements FoodDetailsAdapter.FoodChangeQuantityOnClickListener, RestaurantDetailCommentFragment.hasARestaurantAndUser {
 
     RecyclerView foodRecyclerView;
     List<Food> foods;
     ArrayList<Food> selectedFoods;
     FoodDetailsAdapter adapter;
     Restaurant restaurant;
+    RestaurantDetailFoodListFragment foodListFragment;
+    RestaurantDetailCommentFragment commentFragment;
     Cart cart;
     User user;
     boolean fav_status;
@@ -64,21 +72,45 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
         restaurant = (Restaurant)intent.getExtras().get("res");
         user = (User)intent.getExtras().get("user");
 
+        foodListFragment = new RestaurantDetailFoodListFragment();
+        commentFragment = new RestaurantDetailCommentFragment();
         // Create a temporary cart
         res_id = restaurant.getId();
         cart = new Cart(user, restaurant, null);
         selectedFoods = new ArrayList<>();
 
-        // Get the ViewGroups
-        foodRecyclerView = findViewById(R.id.res_detail_foods_recycler_view);
+        // Set up Tab and Pager
+        setUpPager();
 
         // Put restaurant data to the view
         setUpRestaurantInfo();
 
         // Adapter and recycler view
-        foods = new ArrayList<>();
-        adapter = new FoodDetailsAdapter(foods, this);
-        foodRecyclerView.setAdapter(adapter);
+        //foods = new ArrayList<>();
+        //adapter = new FoodDetailsAdapter(foods, this);
+        //foodRecyclerView.setAdapter(adapter);
+        //getFoods();
+    }
+
+    private void setUpPager() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(foodListFragment);
+        fragments.add(commentFragment);
+        ViewPager pager = findViewById(R.id.res_detail_viewpager);
+        TabLayout tabLayout = findViewById(R.id.res_detail_tab_layout);
+        FragmentManager fm = getSupportFragmentManager();
+        RestaurantDetailTabAdapter adapter = new RestaurantDetailTabAdapter(fm, fragments, findViewById(R.id.res_detail_fab));
+        pager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(pager);
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setTabsFromPagerAdapter(adapter);
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager));
+    }
+
+    public void setUpRecyclerViewAndAdapter(List<Food> foods, FoodDetailsAdapter adapter, RecyclerView recyclerView){
+        this.foods = foods;
+        this.adapter = adapter;
+        this.foodRecyclerView = recyclerView;
         getFoods();
     }
 
@@ -150,6 +182,10 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
             fav.setImageResource(R.drawable.baseline_favorite_border_black_36dp);
             fav_status = false;
         }
+    }
+
+    public void sendComment(View view) {
+        commentFragment.sendComment();
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -240,5 +276,15 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
     @Override
     public void onClickChangeQuantity(Food f, int quantity) {
         cart.addDetail(f, quantity);
+    }
+
+    @Override
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    @Override
+    public User getUser(){
+        return user;
     }
 }

@@ -4,6 +4,7 @@ import com.example.niot.deliveryfood.model.Bill;
 import com.example.niot.deliveryfood.model.BillDetail;
 import com.example.niot.deliveryfood.model.BillResponse;
 import com.example.niot.deliveryfood.model.Cart;
+import com.example.niot.deliveryfood.model.Comment;
 import com.example.niot.deliveryfood.model.Food;
 import com.example.niot.deliveryfood.model.PostResponse;
 import com.example.niot.deliveryfood.model.Restaurant;
@@ -12,12 +13,8 @@ import com.example.niot.deliveryfood.model.User;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -56,4 +53,10 @@ public interface CvlApi {
 
     @GET("/yeu_thich/change")
     Call<PostResponse> changeFav(@Query("id_nguoi_dung") int userId, @Query("id_quan_an") int resId);
+
+    @GET("/xem_danh_gia")
+    Call<List<Comment>> getComments(@Query("id_quan_an") int resId);
+
+    @POST("/danh_gia")
+    Call<PostResponse> sendComment(@Body Comment comment);
 }

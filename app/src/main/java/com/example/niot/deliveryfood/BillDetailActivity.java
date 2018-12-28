@@ -194,8 +194,9 @@ public class BillDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onBackPressed() {
+        super.onBackPressed();
         setResult(0);
-        super.onDestroy();
+        finish();
     }
 }
