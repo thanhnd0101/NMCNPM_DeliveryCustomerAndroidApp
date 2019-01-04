@@ -33,4 +33,6 @@
     <string name="ship">Phí ship:</string>
     <string name="detail">Chi tiết:</string>
     <string name="address">Địa chỉ:</string>
+    <string name="comment_detail">Nội dung</string>
+    <string name="comment_title">Tiêu đề</string>
 </resources>

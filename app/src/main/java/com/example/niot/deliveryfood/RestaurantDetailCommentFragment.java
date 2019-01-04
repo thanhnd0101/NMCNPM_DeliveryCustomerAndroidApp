@@ -44,11 +44,13 @@ public class RestaurantDetailCommentFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(RestaurantDetailCommentFragment.this.getContext() != null){
             Context context = RestaurantDetailCommentFragment.this.getContext();
+            // Get the restaurant and user id => send and receive corresponding comments
             if(context instanceof hasARestaurantAndUser){
                 RestaurantDetailCommentFragment.this.restaurant = ((hasARestaurantAndUser) context).getRestaurant();
                 RestaurantDetailCommentFragment.this.user = ((hasARestaurantAndUser) context).getUser();
             }
         }
+        // Get the reference of all the views in the fragment (after being created)
         view = inflater.inflate(R.layout.comment_list_fragment, container, false);
 
         recyclerView = view.findViewById(R.id.comment_list_recycler_view);
@@ -92,6 +94,7 @@ public class RestaurantDetailCommentFragment extends Fragment {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 if(response.body() != null){
+                    // Status != 0 mean there's an error
                     if(response.body().getStatus() != 0)
                     {
                         AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantDetailCommentFragment.this.getContext());
@@ -103,9 +106,12 @@ public class RestaurantDetailCommentFragment extends Fragment {
                         });
                         builder.create().show();
                     }
+                    // Got it! Sent comment successfully
                     else
-                        Log.e("COMMENTS:","Null response after sent");
+                        getComments();
                 }
+                else
+                    Log.e("COMMENTS:","Null response after sent");
             }
 
             @Override
@@ -115,6 +121,7 @@ public class RestaurantDetailCommentFragment extends Fragment {
         });
     }
 
+    // Interface needs to be implemented by the activity holding this fragment
     public interface hasARestaurantAndUser{
         Restaurant getRestaurant();
         User getUser();

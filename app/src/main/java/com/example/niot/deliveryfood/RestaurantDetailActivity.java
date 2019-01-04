@@ -84,12 +84,6 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
 
         // Put restaurant data to the view
         setUpRestaurantInfo();
-
-        // Adapter and recycler view
-        //foods = new ArrayList<>();
-        //adapter = new FoodDetailsAdapter(foods, this);
-        //foodRecyclerView.setAdapter(adapter);
-        //getFoods();
     }
 
     private void setUpPager() {

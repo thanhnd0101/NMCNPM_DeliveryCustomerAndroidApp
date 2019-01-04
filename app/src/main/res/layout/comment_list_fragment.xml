@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="5"
-                    android:text="Tiêu đề"
+                    android:text="@string/comment_title"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="13"
                     android:singleLine="true"
-                    android:text="Tieu de"
+                    android:hint="Quán ăn ngon"
                     android:id="@+id/comment_add_comment_title"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -57,7 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Nội dung"
+                    android:text="@string/comment_detail"
                     android:layout_weight="5"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="13"
-                    android:text="Noi dung"
+                    android:hint="Đánh giá ở đây..."
                     android:lines="2"
                     android:textSize="20sp"
                     android:id="@+id/comment_add_comment_detail"/>
