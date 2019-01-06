@@ -1,24 +1,27 @@
 package com.example.niot.deliveryfood;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.example.niot.deliveryfood.Adapter.BillViewAdapter;
-import com.example.niot.deliveryfood.model.Bill;
 import com.example.niot.deliveryfood.model.User;
 
-public class MainActivity extends AppCompatActivity implements BillsViewFragment.HasUserId {
+
+public class MainActivity extends AppCompatActivity implements BillsViewFragment.HasUserId, AccountSettingFragment.HasUserInfo{
+    public static final int CHANGE_AVATAR_CODE = 2525;
     static private User user = null;
     private FrameLayout frame;
     private RestaurantsViewFragment restaurantsViewFragment = new RestaurantsViewFragment();
     private BillsViewFragment billViewFragment = new BillsViewFragment();
     private CurrentBillsViewFragment currentBillsViewFragment = new CurrentBillsViewFragment();
+    private AccountSettingFragment accountSettingFragment = new AccountSettingFragment();
     // More fragment
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -28,13 +31,22 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    if(getSupportActionBar() != null)
+                        getSupportActionBar().setTitle("Quán ăn");
                     loadFragment(restaurantsViewFragment);
                     return true;
                 case R.id.navigation_dashboard:
+                    if(getSupportActionBar() != null)
+                        getSupportActionBar().setTitle("Tất cả đơn");
                     loadFragment(billViewFragment);
                     return true;
                 case R.id.navigation_notifications:
+                    if(getSupportActionBar() != null)
+                        getSupportActionBar().setTitle("Đơn đang thực hiện");
                     loadFragment(currentBillsViewFragment);
+                    return true;
+                case R.id.navigation_account:
+                    loadFragment(accountSettingFragment);
                     return true;
             }
             return false;
@@ -53,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
         frame = findViewById(R.id.fragment_container);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle("Quán ăn");
+        }
         loadFragment(restaurantsViewFragment);
     }
 
@@ -67,12 +82,30 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
         return false;
     }
 
+    // Change Avatar Result
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CHANGE_AVATAR_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                if(data.getExtras() != null)
+                    user = (User) data.getExtras().get("user");
+                accountSettingFragment.updateAvatar(user);
+            }
+        }
+    }
+
     @Override
     public int getUserId() {
         return user.getId();
     }
 
-    public static User getUser() {
+    public User getUser() {
         return user;
+    }
+
+    public ActionBar myGetActionBar(){
+        return getSupportActionBar();
     }
 }

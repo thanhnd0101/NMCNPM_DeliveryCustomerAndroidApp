@@ -36,6 +36,7 @@ public class FoodDetailsAdapter extends RecyclerView.Adapter<FoodDetailsAdapter.
         foodDetailsHolder.food_name.setText(foods.get(i).getName());
         foodDetailsHolder.food_desc.setText(foods.get(i).getDescription());
         foodDetailsHolder.food_price.setText(String.valueOf(foods.get(i).getPrice()));
+        foodDetailsHolder.itemView.setClickable(true);
 
         foodDetailsHolder.food_add.setOnClickListener(new View.OnClickListener() {
             @Override

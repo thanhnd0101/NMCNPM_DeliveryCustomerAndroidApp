@@ -6,6 +6,8 @@ import com.example.niot.deliveryfood.model.BillResponse;
 import com.example.niot.deliveryfood.model.Cart;
 import com.example.niot.deliveryfood.model.Comment;
 import com.example.niot.deliveryfood.model.Food;
+import com.example.niot.deliveryfood.model.ImgurModel.ImgurRequest;
+import com.example.niot.deliveryfood.model.ImgurModel.ImgurResponse;
 import com.example.niot.deliveryfood.model.PostResponse;
 import com.example.niot.deliveryfood.model.Restaurant;
 import com.example.niot.deliveryfood.model.User;
@@ -13,10 +15,17 @@ import com.example.niot.deliveryfood.model.User;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -59,4 +68,16 @@ public interface CvlApi {
 
     @POST("/danh_gia")
     Call<PostResponse> sendComment(@Body Comment comment);
+
+    @GET("/update_avatar/nguoi_dung")
+    Call<User> updateUserAvatar(@Query("id") int idUser, @Query("anh") String link);
+
+    @POST("/update/nguoi_dung")
+    Call<User> updateUser(@Body User user);
+
+    //IMGUR UPLOAD
+    @Headers("Authorization: Client-ID acde5a73f3f4746")
+    @Multipart
+    @POST("https://api.imgur.com/3/image")
+    Call<ImgurResponse> imgurUpload(@Part("image")RequestBody image);
 }

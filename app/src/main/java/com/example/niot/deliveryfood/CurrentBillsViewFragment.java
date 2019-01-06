@@ -33,7 +33,7 @@ public class CurrentBillsViewFragment extends BillsViewFragment {
                     try{
                         if(firstRun)
                         {
-                            recyclerView.post(getData);
+                            loadData();
                             firstRun = false;
                         }
                         recyclerView.postDelayed(getData, 2000);

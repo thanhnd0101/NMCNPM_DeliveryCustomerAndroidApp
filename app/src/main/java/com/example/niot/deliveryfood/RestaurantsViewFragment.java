@@ -48,7 +48,7 @@ public class RestaurantsViewFragment extends Fragment implements RestaurantsAdap
         User u;
         // Get the user from MainActivity (this should work because MainActivity is the parent of this fragment)
         if(this.getActivity() instanceof MainActivity){
-            u = MainActivity.getUser();
+            u = ((MainActivity)this.getActivity()).getUser();
         }
         else
         {

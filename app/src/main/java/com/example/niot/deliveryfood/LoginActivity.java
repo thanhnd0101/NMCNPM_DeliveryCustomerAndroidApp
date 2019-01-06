@@ -3,6 +3,7 @@ package com.example.niot.deliveryfood;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,6 +17,7 @@ import com.example.niot.deliveryfood.retrofit.CvlApi;
 import com.example.niot.deliveryfood.retrofit.RetrofitObject;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginBtnClicked(View view) {
-        if(isSendingRequest == false)
+        if(!isSendingRequest)
             isSendingRequest = true;
         else
             Toast.makeText(LoginActivity.this, "Sending request, stop spamming!!", Toast.LENGTH_LONG);
@@ -84,8 +86,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Hide the keyboard if user click button
-        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        try{
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            if(imm != null)
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }catch (Exception e){
+            Log.e("Login: ", e.getMessage());
+        }
     }
 
     private boolean isValidUsernamePassword() {

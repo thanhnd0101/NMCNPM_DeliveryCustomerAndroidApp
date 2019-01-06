@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
+    tools:ignore="KeyboardInaccessibleWidget"
     tools:context=".BillDetailActivity">
 
     <android.support.v7.widget.CardView
@@ -18,6 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple"
+            android:clickable="true"
             android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
@@ -59,19 +62,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginHorizontal="7dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/ripple"
+            android:clickable="true">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@string/customer_addr"
+                android:layout_marginStart="7dp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
+                android:layout_marginEnd="7dp"
                 android:text="addr"
                 android:id="@+id/bill_detail_customer_addr"/>
         </LinearLayout>
@@ -85,19 +91,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginHorizontal="7dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/ripple"
+            android:clickable="true">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:layout_marginStart="7dp"
                 android:text="@string/restaurant_addr"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
+                android:layout_marginEnd="7dp"
                 android:text="addr"
                 android:id="@+id/bill_detail_restaurant_addr"/>
         </LinearLayout>
@@ -116,13 +125,19 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:layout_marginBottom="3dp">
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="7dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:text="@string/detail"/>
+                    android:background="@drawable/ripple"
+                    android:clickable="true">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="7dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="@string/detail"/>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -145,13 +160,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginHorizontal="7dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@drawable/ripple"
+                    android:clickable="true">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
+                        android:layout_marginStart="7dp"
                         android:text="@string/total"
                         android:textStyle="bold"/>
                     <TextView
@@ -159,6 +176,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="textEnd"
                         android:id="@+id/bill_detail_total"
+                        android:layout_marginEnd="7dp"
                         android:textSize="18sp"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -170,19 +188,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginHorizontal="7dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@drawable/ripple"
+                    android:clickable="true">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
+                        android:layout_marginStart="7dp"
                         android:text="@string/ship"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="textEnd"
+                        android:layout_marginEnd="7dp"
                         android:id="@+id/bill_detail_ship"
                         android:textSize="18sp"/>
                 </LinearLayout>
@@ -195,19 +216,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginHorizontal="7dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@drawable/ripple"
+                    android:clickable="true">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="19sp"
                         android:text="@string/total_total"
+                        android:layout_marginStart="7dp"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="textEnd"
+                        android:layout_marginEnd="7dp"
                         android:id="@+id/bill_detail_total_total"
                         android:textSize="18sp"/>
                 </LinearLayout>

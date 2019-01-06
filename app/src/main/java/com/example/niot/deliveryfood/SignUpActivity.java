@@ -2,10 +2,13 @@ package com.example.niot.deliveryfood;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niot.deliveryfood.model.Cart;
@@ -29,11 +32,13 @@ public class SignUpActivity extends AppCompatActivity {
     private String phone;
     private String email;
     private String password;
+    private String password2;
 
     EditText nameET;
     EditText phoneET;
     EditText emailET;
     EditText passwordET;
+    EditText password2ET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         nameET = findViewById(R.id.nameEdit);
         phoneET = findViewById(R.id.phoneEdit);
         passwordET = findViewById(R.id.passwordEdit);
+        password2ET = findViewById(R.id.password2Edit);
         emailET = findViewById(R.id.emailEdit);
     }
 
@@ -50,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         name = nameET.getText().toString();
         phone = phoneET.getText().toString();
         password = passwordET.getText().toString();
+        password2 = password2ET.getText().toString();
         email = emailET.getText().toString();
     }
 
@@ -60,12 +67,28 @@ public class SignUpActivity extends AppCompatActivity {
         return true;
     }
 
+    private boolean checkPassword(){
+        getInput();
+        return password.equals(password2);
+    }
+
 
     public void submitRegisterInfoClicked(View view) {
         if(!checkInput())
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Fail!").setMessage(R.string.str_missing_info).setPositiveButton(R.string.str_ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.create().show();
+        }
+        else if(!checkPassword()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Fail!").setMessage(getString(R.string.wrong_password_confirm)).setPositiveButton(R.string.str_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

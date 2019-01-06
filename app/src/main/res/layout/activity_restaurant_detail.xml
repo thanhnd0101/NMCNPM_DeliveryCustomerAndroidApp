@@ -16,8 +16,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/card_res_detail_id"
-                android:background="@color/color_default_white"
-                android:orientation="vertical">
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:orientation="vertical"
+                tools:ignore="KeyboardInaccessibleWidget">
                 <LinearLayout
                     android:orientation="horizontal" android:layout_width="match_parent"
                     android:layout_height="wrap_content">
