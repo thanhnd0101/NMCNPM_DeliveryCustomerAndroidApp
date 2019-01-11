@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,7 +43,7 @@ import retrofit2.Retrofit;
 
 public class ChangeUserInformationActivity extends AppCompatActivity {
     final int PICK_IMAGE = 5012;
-    Bitmap avatar;
+    Bitmap avatar = null;
     User user;
 
     boolean isAvatarChanged;
@@ -52,8 +53,10 @@ public class ChangeUserInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_user_information);
-        if(getActionBar() != null)
-            getActionBar().setTitle("Thông tin cá nhân");
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle("Thông tin cá nhân");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Bundle b = getIntent().getExtras();
         if(b != null)
@@ -62,6 +65,15 @@ public class ChangeUserInformationActivity extends AppCompatActivity {
             finish();
 
         displayUserInfo();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                this.finish();
+        }
+        return true;
     }
 
     private void displayUserInfo() {
@@ -130,6 +142,10 @@ public class ChangeUserInformationActivity extends AppCompatActivity {
     }
 
     public void UploadImage(View view) {
+        if(avatar == null){
+            UpdateUserAvatar(user.getImage_path());
+            return;
+        }
         Retrofit retrofit = RetrofitObject.getInstance();
         RequestBody body = RequestBody.create(MediaType.parse("text/plain"), bitmapToBase64(avatar));
         retrofit.create(CvlApi.class).imgurUpload(body).enqueue(new Callback<ImgurResponse>() {

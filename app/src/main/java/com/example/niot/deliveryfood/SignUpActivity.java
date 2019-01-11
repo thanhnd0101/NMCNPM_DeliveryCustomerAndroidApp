@@ -114,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if(response.body().size() > 0)
                             msg = "Success! Your id: " + String.valueOf(response.body().get(0).getId());
                         else
-                            msg = "Failed 1";
+                            msg = "Số đt đã được sử dụng";
                     }
                     else
                         msg = "";

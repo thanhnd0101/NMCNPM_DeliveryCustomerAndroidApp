@@ -3,13 +3,16 @@ package com.example.niot.deliveryfood;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.niot.deliveryfood.model.User;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
     private BillsViewFragment billViewFragment = new BillsViewFragment();
     private CurrentBillsViewFragment currentBillsViewFragment = new CurrentBillsViewFragment();
     private AccountSettingFragment accountSettingFragment = new AccountSettingFragment();
+    private boolean isBacked = false;
     // More fragment
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
             if(resultCode == Activity.RESULT_OK){
                 if(data.getExtras() != null)
                     user = (User) data.getExtras().get("user");
-                accountSettingFragment.updateAvatar(user);
+                accountSettingFragment.updateActionBar(user);
             }
         }
     }
@@ -107,5 +111,24 @@ public class MainActivity extends AppCompatActivity implements BillsViewFragment
 
     public ActionBar myGetActionBar(){
         return getSupportActionBar();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isBacked) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.isBacked = true;
+        Toast.makeText(this, "Ấn BACK lần nữa để thoát", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                isBacked=false;
+            }
+        }, 2000);
     }
 }

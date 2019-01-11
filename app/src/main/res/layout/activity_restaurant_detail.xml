@@ -20,18 +20,24 @@
                 android:clickable="true"
                 android:orientation="vertical"
                 tools:ignore="KeyboardInaccessibleWidget">
+
                 <LinearLayout
-                    android:orientation="horizontal" android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="3dp"
-                        android:layout_gravity="center_vertical"
-                        android:id="@+id/res_detail_res_img"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.design.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="6dp"
+                        android:layout_margin="8dp">
+                        <ImageView
+                            android:id="@+id/res_detail_res_img"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:layout_gravity="center_vertical" />
+                    </android.support.design.card.MaterialCardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -44,14 +50,13 @@
                             android:id="@+id/res_detail_res_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="25sp"
+                            android:textSize="23sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/res_detail_res_description"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20dp" />
+                            android:layout_height="wrap_content" />
 
                         <RatingBar
                             android:id="@+id/res_detail_rating"
@@ -72,7 +77,7 @@
                                 android:layout_height="40dp"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/baseline_favorite_border_black_36dp"
-                                android:tint="@color/colorPrimary" />
+                                android:tint="@color/colorAccent" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -91,15 +96,15 @@
         android:layout_height="0.75dp"
         android:orientation="vertical"
         android:layout_below="@id/card_res_detail_id"
-        android:background="@color/color_light_gray"
+        android:background="@color/color_black"
         android:id="@+id/res_detail_blank_layout"/>
 
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/res_detail_blank_layout"
-        android:background="@color/color_default_white"
-        app:tabIndicatorColor="@color/colorPrimary"
+        android:background="@drawable/ripple"
+        app:tabIndicatorColor="@color/colorAccent"
         app:tabIndicatorHeight="1.5dp"
         android:id="@+id/res_detail_tab_layout">
 

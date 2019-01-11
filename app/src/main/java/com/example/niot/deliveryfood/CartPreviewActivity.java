@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -40,11 +41,23 @@ public class CartPreviewActivity extends AppCompatActivity{
         String json = getIntent().getStringExtra("cartJson");
         cart = new Gson().fromJson(json, Cart.class);
 
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView = findViewById(R.id.cart_preview_recycler_view);
         adapter = new FoodSimpleViewAdapter(cart);
         recyclerView.setAdapter(adapter);
         EditText addr = findViewById(R.id.cart_preview_user_address);
         addr.setText(cart.getAddress());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                this.finish();
+        }
+        return true;
     }
 
     public void confirmCart(View view) {

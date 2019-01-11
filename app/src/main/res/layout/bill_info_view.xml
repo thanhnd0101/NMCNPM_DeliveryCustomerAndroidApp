@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/bill"
-            android:textColor="@color/color_black"
             android:layout_marginStart="5dp"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -26,11 +25,11 @@
             android:id="@+id/bill_address_text_view"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.5"
                 android:layout_marginStart="5dp"
                 android:id="@+id/bill_info_status"/>
             <TextView
@@ -40,7 +39,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textAlignment="viewEnd"
-                android:textColor="@color/color_black"
+                android:singleLine="true"
                 android:layout_marginTop="7dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"

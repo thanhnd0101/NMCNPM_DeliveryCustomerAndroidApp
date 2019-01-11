@@ -52,19 +52,13 @@ public class BillViewAdapter extends RecyclerView.Adapter<BillViewAdapter.BillHo
             default: str = "Đã huỷ"; break;
         }
 
-        final String str1 = str;
-        status.post(new Runnable() {
-            @Override
-            public void run() {
-                status.setText(str1);
-                if(bill.getTrangThai() == -1)
-                    status.setTextColor(Color.RED);
-                else if(bill.getTrangThai() < 4)
-                    status.setTextColor(Color.BLUE);
-                else
-                    status.setTextColor(0xFF005500);
-            }
-        });
+        status.setText(str);
+        if(bill.getTrangThai() == -1)
+            status.setTextColor(Color.rgb(0xDD,0x4F,0x43));
+        else if(bill.getTrangThai() < 4)
+            status.setTextColor(Color.rgb(0x4A,0x8A,0xF4));
+        else
+            status.setTextColor(Color.rgb(0x19,0xA1,0x5F));
 
         // Bấm vào để hiện chi tiết -> mở intent activity khác, gọi về fragment để fragment xử lý
         billHolder.itemView.setOnClickListener(new View.OnClickListener() {

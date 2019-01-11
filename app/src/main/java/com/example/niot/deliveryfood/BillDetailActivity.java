@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class BillDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill_detail);
         Bundle extras = getIntent().getExtras();
         details = new ArrayList<>();
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(extras != null)
             bill = (Bill)extras.get("bill");
         if(bill == null)
@@ -69,6 +72,16 @@ public class BillDetailActivity extends AppCompatActivity {
         updateBillStatus();
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                this.finish();
+        }
+        return true;
+    }
+
     private void updateBillStatus(){
         final TextView status = findViewById(R.id.bill_detail_status);
         String str;
@@ -87,11 +100,11 @@ public class BillDetailActivity extends AppCompatActivity {
             public void run() {
                 status.setText(str1);
                 if(bill.getTrangThai() == -1)
-                    status.setTextColor(Color.RED);
+                    status.setTextColor(Color.rgb(0xDD,0x4F,0x43));
                 else if(bill.getTrangThai() < 4)
-                    status.setTextColor(Color.BLUE);
+                    status.setTextColor(Color.rgb(0x4A,0x8A,0xF4));
                 else
-                    status.setTextColor(0xFF005500);
+                    status.setTextColor(Color.rgb(0x19,0xA1,0x5F));
             }
         });
     }

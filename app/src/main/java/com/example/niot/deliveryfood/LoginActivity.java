@@ -1,6 +1,8 @@
 package com.example.niot.deliveryfood;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
 
     String phone_number;
     String password;
-    boolean isSendingRequest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginBtnClicked(View view) {
-        if(!isSendingRequest)
-            isSendingRequest = true;
-        else
-            Toast.makeText(LoginActivity.this, "Sending request, stop spamming!!", Toast.LENGTH_LONG);
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setTitle("Đang đăng nhập...");
+        dialog.setMessage("Vui lòng đợi trong giây lát");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.show();
+                    }
+                });
+            }
+        }).start();
 
         Retrofit retrofit = RetrofitObject.getInstance();
 
@@ -53,24 +64,36 @@ public class LoginActivity extends AppCompatActivity {
         if(isValidUsernamePassword())
             retrofit.create(CvlApi.class)
                 .loginUser(phone_number, password)
-                .enqueue(new Callback<List<User>>() {
+                .enqueue(new Callback<List<User>>(){
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                isSendingRequest = false;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(dialog.isShowing())
+                                    dialog.dismiss();
+                            }
+                        });
+                    }
+                }).start();
                 String title, msg;
 
                 if(response.body() != null){
                     List<User> users = response.body();
 
                     if(users.size() > 0){
-                        msg = users.get(0).toString();
+                        //msg = users.get(0).toString();
+                        msg = "Chào mừng " + users.get(0).getName() + ". Bạn đã đăng nhập thành công!";
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
                         i.putExtra("user",users.get(0));
                         startActivity(i);
                         LoginActivity.this.finish();
                     }
                     else{
-                        msg = "Wrong phone number or password!";
+                        msg = "Sai số điện thoại hoặc mật khẩu!";
                     }
                 }
                 else
@@ -80,7 +103,18 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                isSendingRequest = false;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(dialog.isShowing())
+                                    dialog.dismiss();
+                            }
+                        });
+                    }
+                }).start();
                 Toast.makeText(LoginActivity.this, "Request failed! Check your connection and try again.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -101,8 +135,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void GetUsernamePassword() {
-        EditText phoneET = findViewById(R.id.login_layout_edit_text_sdt);
-        EditText passET = findViewById(R.id.login_layout_edit_text_password);
+        TextInputEditText phoneET = findViewById(R.id.login_layout_edit_text_sdt);
+        TextInputEditText passET = findViewById(R.id.login_layout_edit_text_password);
 
         passET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

@@ -1,15 +1,20 @@
 package com.example.niot.deliveryfood;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
@@ -19,9 +24,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +71,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
     Cart cart;
     User user;
     boolean fav_status;
+    boolean commentEditShow = false;
     int res_id;
 
     @Override
@@ -71,6 +81,9 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
         Intent intent = getIntent();
         restaurant = (Restaurant)intent.getExtras().get("res");
         user = (User)intent.getExtras().get("user");
+
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         foodListFragment = new RestaurantDetailFoodListFragment();
         commentFragment = new RestaurantDetailCommentFragment();
@@ -84,6 +97,15 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
 
         // Put restaurant data to the view
         setUpRestaurantInfo();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                this.finish();
+        }
+        return true;
     }
 
     private void setUpPager() {
@@ -151,6 +173,24 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
         });
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(!commentEditShow)
+            return super.dispatchTouchEvent(ev);
+        LinearLayout linearLayout = findViewById(R.id.send_comment_layout);
+        Rect hit = new Rect();
+        linearLayout.getGlobalVisibleRect(hit);
+        if(hit.contains((int)ev.getX(), (int)ev.getY()))
+            return super.dispatchTouchEvent(ev);
+        TextInputLayout title = findViewById(R.id.comment_title_layout);
+        TextInputLayout detail = findViewById(R.id.comment_detail_layout);
+
+        if(commentEditShow){
+            hideCommentEdit(title, detail);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void changeFavStatus() {
         Retrofit retrofit = RetrofitObject.getInstance();
         retrofit.create(CvlApi.class).changeFav(user.getId(), restaurant.getId()).enqueue(new Callback<PostResponse>() {
@@ -179,7 +219,66 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
     }
 
     public void sendComment(View view) {
-        commentFragment.sendComment();
+        final TextInputLayout title = findViewById(R.id.comment_title_layout);
+        final TextInputLayout detail = findViewById(R.id.comment_detail_layout);
+
+        if(commentEditShow){
+            commentFragment.sendComment();
+            hideCommentEdit(title, detail);
+        }
+        else{
+            showCommentEdit(title, detail);
+        }
+    }
+
+    private void showCommentEdit(TextInputLayout title, TextInputLayout detail) {
+        commentEditShow = true;
+
+        // Prepare the View for the animation
+        title.setVisibility(View.VISIBLE);
+        title.setAlpha(0.0f);
+
+        // Start the animation
+        title.animate()
+                .translationY(0)
+                .alpha(1.0f)
+                .setListener(null);
+
+        // Prepare the View for the animation
+        detail.setVisibility(View.VISIBLE);
+        detail.setAlpha(0.0f);
+
+        // Start the animation
+        detail.animate()
+                .translationY(0)
+                .alpha(1.0f)
+                .setListener(null);
+    }
+
+    private void hideCommentEdit(final TextInputLayout title, final TextInputLayout detail) {
+        commentEditShow = false;
+
+        title.animate()
+                .translationY(title.getHeight())
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        title.setVisibility(View.GONE);
+                    }
+                });
+
+        detail.animate()
+                .translationY(title.getHeight())
+                .alpha(0.0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        detail.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -248,7 +347,7 @@ public class RestaurantDetailActivity extends AppCompatActivity implements FoodD
         Log.e("RES DETAIL LOG:", cart.toString());
         if(cart.getDetail().size() == 0){
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-            builder.setTitle("There's nothing in your cart!").setMessage("Bạn phải chọn món chứ!").setPositiveButton(R.string.str_ok, new DialogInterface.OnClickListener() {
+            builder.setTitle("Chưa chọn món mà!").setMessage("Chọn ít nhất một món để đặt.").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

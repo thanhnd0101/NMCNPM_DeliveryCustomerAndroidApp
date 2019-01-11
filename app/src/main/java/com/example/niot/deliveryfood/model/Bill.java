@@ -13,6 +13,8 @@ public class Bill implements Serializable {
     private String DiaChiGiao;
     @SerializedName("dchi_quan")
     private String DiaChiQuan;
+    @SerializedName("id_quan_an")
+    private int idQuanAn;
     @SerializedName("tg_nd_dat")
     private String TGKhachHangDat;
     @SerializedName("tg_qa_xac_nhan")
@@ -62,6 +64,10 @@ public class Bill implements Serializable {
 
     public String getTGShipperXacNhanDaGiaoHang() {
         return TGShipperXacNhanDaGiaoHang;
+    }
+
+    public int getIdQuanAn() {
+        return idQuanAn;
     }
 
     public int getTrangThai() {

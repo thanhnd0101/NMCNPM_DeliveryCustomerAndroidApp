@@ -6,56 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:background="@drawable/app_background"
+    android:background="@drawable/gradient"
     android:weightSum="4.5">
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.design.circularreveal.cardview.CircularRevealCardView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
-        android:layout_weight="2.5"
-        android:layout_marginTop="30dp"
-        tools:ignore="InefficientWeight"
-        android:orientation="horizontal"
-        android:weightSum="4">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            tools:ignore="NestedWeights,Suspicious0dp" />
+        android:layout_gravity="center_horizontal">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             tools:ignore="ContentDescription"
             android:src="@drawable/app_avatar"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-    </LinearLayout>
+    </android.support.design.circularreveal.cardview.CircularRevealCardView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:layout_weight="1"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="7"
-            tools:ignore="NestedWeights,UselessParent">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
+        android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
-                <EditText
+                <!--<EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -64,8 +44,35 @@
                     android:hint="@string/login_edit_text_sdt_hint"
                     android:inputType="phone"
                     android:nextFocusDown="@id/login_layout_edit_text_password"
-                    tools:ignore="Autofill,TextFields" />
-                <EditText
+                    tools:ignore="Autofill,TextFields" />-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_phone_black_18dp"
+                        android:tint="@color/color_light_gray"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp">
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/login_layout_edit_text_sdt"
+                            android:singleLine="true"
+                            android:hint="@string/login_edit_text_sdt_hint"
+                            android:inputType="phone"
+                            style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox"
+                            android:nextFocusDown="@id/login_layout_edit_text_password"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+                <!--<EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -74,13 +81,36 @@
                     android:hint="@string/login_edit_text_password_hint"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
-                    tools:ignore="Autofill,TextFields" />
+                    tools:ignore="Autofill,TextFields" />-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/baseline_lock_black_18dp"
+                        android:tint="@color/color_light_gray"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true"
+                        android:layout_marginStart="10dp">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/login_layout_edit_text_password"
+                            android:singleLine="true"
+                            android:hint="@string/login_edit_text_password_hint"
+                            android:imeOptions="actionDone"
+                            style="@style/Widget.MaterialComponents.TextInputEditText.FilledBox"
+                            android:inputType="textPassword"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
             </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,19 +130,21 @@
             android:layout_weight="3"
             tools:ignore="UselessLeaf"
             android:orientation="vertical">
-            <Button
+            <android.support.design.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginVertical="8dp"
+                android:layout_marginTop="8dp"
+                android:padding="20dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:text="@string/login_button_dangnhap"
                 android:id="@+id/login_layout_button_dangnhap"
                 android:onClick="loginBtnClicked"/>
-            <Button
+            <android.support.design.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginVertical="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="20dp"
                 android:text="@string/login_button_dangky"
                 android:id="@+id/login_layout_button_dangky"
                 android:onClick="registerBtnClicked"/>

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,10 +39,10 @@ public class AccountSettingFragment extends Fragment {
             actionBar = ((HasUserInfo) activity).myGetActionBar();
         }
 
-        updateAvatar();
+        updateActionBar();
 
-        if(actionBar != null)
-            ((TextView)actionBar.getCustomView().findViewById(R.id.account_name)).setText(user.getName());
+        //if(actionBar != null)
+        //    ((TextView)actionBar.getCustomView().findViewById(R.id.account_name)).setText(user.getName());
 
         settingUpOnClick();
         return view;
@@ -65,15 +64,18 @@ public class AccountSettingFragment extends Fragment {
     }
 
 
-    public void updateAvatar(User user) {
+    public void updateActionBar(User user) {
         if(user != null)
             this.user = user;
         Log.e("AccountSettingFrag:","updating!");
         new DownloadImageTask(actionBar).execute(this.user.getImage_path());
+
+        if(actionBar != null)
+           ((TextView)actionBar.getCustomView().findViewById(R.id.account_name)).setText(this.user.getName());
     }
 
-    private void updateAvatar(){
-        updateAvatar(null);
+    private void updateActionBar(){
+        updateActionBar(null);
     }
 
     @Override
