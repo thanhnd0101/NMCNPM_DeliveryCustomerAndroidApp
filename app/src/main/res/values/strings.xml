@@ -18,8 +18,6 @@
     <string name="title_home">Quán</string>
     <string name="title_bill">Tất cả đơn</string>
     <string name="title_current_bill">Đang xử lý</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_price">Tổng tiền:</string>
     <string name="bill">#Hoá đơn</string>
