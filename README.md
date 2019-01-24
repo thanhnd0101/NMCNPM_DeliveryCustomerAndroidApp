@@ -7,6 +7,7 @@ User: Users who needs to order food
 ## Contributors
 - Thanh Nguyen Duy: Login screen (then he developed the app for shipper)
 - Buu Loc Nguyen: Other parts
+- Special thanks to Hoai Nam Tran for designing logo
 
 ## Use
 ### Sign up
